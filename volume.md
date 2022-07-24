@@ -82,3 +82,23 @@ what to see the nodemon logs
 ```
 docker logs <NAMEOFCONTAINER>
 ```
+
+# Environment Variable
+in Dockerfile
+
+```
+COPY . .
+ENV PORT 80
+EXPOSE $PORT
+```
+
+we can also specify in cmd
+
+```
+docker run -p 3000:8000 -e PORT=8000 -e MONGO_PASSWORD=123 <IMAGENAME>
+```
+
+we can also specify the file location
+```
+docker run -p 3000:8000 --env-file ./.env <IMAGENAME>
+```
