@@ -72,3 +72,8 @@ docker build -t goals:anything .
 ```
 docker run -p 3000:8000 -d --rm --name venkat goals:anything
 ```
+
+To stop all container
+```
+docker container prune
+```
