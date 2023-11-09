@@ -3,10 +3,23 @@
 for multicontainer it is little bit time consuming for create build for all container and run all container,but using docker-compose will do this for us with one configuration file
 
 to start the docker-compose
+
 ```
 docker-compose up
 ```
+
 to stop the docker-compose
+
 ```
 docker-compose down
+```
+
+for network we create a network to connect from one container to another container, but docker-compose will do it automatically, it will be in same network, if we need own network also we can create it
+
+why we use : somewhere and - somewhere, that is : mean it is key value data , if it is single lined without key, then we use -
+
+```
+image: 'mongo'
+    volumes:
+      - data:/data/db
 ```

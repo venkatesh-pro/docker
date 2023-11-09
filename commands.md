@@ -20,6 +20,7 @@ To change docker run to datached we can use: -d
 ```
 docker run -p 3000:80 -d <ID>
 ```
+this 3000 is the outside port need to be exposed and 80 is the container port which is running inside the container
 
 To see the console.log , we can change to attach mode
 ```

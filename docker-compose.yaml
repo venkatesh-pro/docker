@@ -1,16 +1,18 @@
 version: "3.8"
 services:
+  # this mongodb container use mongo image from docker hub, so we specify image name, but in backend container we specify the folder becuase there is dockerfile, which has all the image info.
   mongodb:
-    image: 'mongo'
-    volumes: 
+    image: "mongo"
+    volumes:
       - data:/data/db
-    # environment: 
+    # environment:
     #   MONGO_INITDB_ROOT_USERNAME: max
     #   MONGO_INITDB_ROOT_PASSWORD: secret
-      # - MONGO_INITDB_ROOT_USERNAME=max
-    env_file: 
+    # - MONGO_INITDB_ROOT_USERNAME=max
+    env_file:
       - ./env/mongo.env
   backend:
+    # we specify build because we are going to create new image like that
     build: ./backend
     # build:
     #   context: ./backend
@@ -18,26 +20,30 @@ services:
     #   args:
     #     some-arg: 1
     ports:
-      - '80:80'
-    volumes: 
-      - logs:/app/logs
-      - ./backend:/app
-      - /app/node_modules
-    env_file: 
+      - "80:80"
+    volumes:
+      - logs:/app/logs #this is named volume
+      - ./backend:/app #bind mount, this code tell, share whole ./backend folder inside the /app in docker
+      - /app/node_modules #anonymous volume
+
+      # reference
+      # docker run -d -p 3000:80 --name feedback-app -v feedback:/app/feedback -v "F:\docker\volume-app:/app" -v /app/node_modules feedback-node:volumes
+    env_file:
       - ./env/backend.env
     depends_on:
       - mongodb
   frontend:
     build: ./frontend
-    ports: 
-      - '3000:3000'
-    volumes: 
+    ports:
+      - "3000:3000"
+    volumes:
       - ./frontend/src:/app/src
     stdin_open: true
     tty: true
-    depends_on: 
+    depends_on:
       - backend
 
-volumes: 
+volumes:
   data:
   logs:
+# only named volumes need to specify here , anonymous and bind volume don't need to specify. because it will make it perment
